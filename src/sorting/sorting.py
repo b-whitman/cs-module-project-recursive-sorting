@@ -3,10 +3,8 @@ def merge(arrA, arrB):
 
     # Is there a difference between these two initialization techniques?
     
-    # elements = len(arrA) + len(arrB)
-    # merged_arr = [0] * elements
-
-    merged_arr = []
+    elements = len(arrA) + len(arrB)
+    merged_arr = [0] * elements
 
     # How do I loop over the two lists, comparing values at each position
     # sequentially?
@@ -15,13 +13,28 @@ def merge(arrA, arrB):
     # for ptrA, ptrB in ranges:
     #     print(ptrA, ptrB)
 
-    while ptrA <= len(arrA) and ptrB <= len(arrB):
+    ptrA = 0
+    ptrB = 0
+    merged_ptr = 0
+
+    while ptrA < len(arrA) and ptrB < len(arrB):
         if arrA[ptrA] < arrB[ptrB]:
-            merged_arr.append(arrA[ptrA])
+            merged_arr[merged_ptr] = arrA[ptrA]
             ptrA += 1
         elif arrB[ptrB] < arrA[ptrA]:
-            merged_arr.append(arrB[ptrB])
+            merged_arr[merged_ptr] = arrB[ptrB]
             ptrB += 1
+        merged_ptr += 1
+    
+    while ptrA < len(arrA):
+        merged_arr[merged_ptr] = arrA[ptrA]
+        ptrA += 1
+        merged_ptr += 1
+
+    while ptrB < len(arrB):
+        merged_arr[merged_ptr] = arrB[ptrB]
+        ptrB += 1
+        merged_ptr += 1
 
     
 
@@ -33,12 +46,12 @@ def merge_sort(arr):
     if len(arr) > 1:
         left = merge_sort(arr[:int(len(arr)/2)])
         right = merge_sort(arr[int(len(arr)/2):])
-        merge(left, right)
+        arr = merge(left, right)
 
 
     return arr
 
-merge_sort([4,3,2,1])
+print(merge_sort([4,3,2,1]))
 
 # STRETCH: implement the recursive logic for merge sort in a way that doesn't 
 # utilize any extra memory
